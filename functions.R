@@ -75,7 +75,7 @@ IDWinterpolation <- function(netcdf,dfspatial,ti,grd,geomClip){
   # DEPRECADO AL NO COINCIDIR CON EL NUMERO DE ROWS PUES HAN SIDO FILTRADOS
   dfspatial$precip <- coordsFilterNan(netcdf,ti)[c(3)]
   #dfspatial <- sp.na.omit(dfspatial,margin = 1) #Eliminacion de estaciones con NaN values- LOS VALORES YA HAN SIDO LIMPIADOS--
-  interIDW<- gstat::idw(precip~1,dfspatial,newdata=grd,idp=2.0)  
+  interIDW<- gstat::idw(precip~1,dfspatial,newdata=grd,idp=4.0)  
   rastIWD <- raster(interIDW)
   rastIWDClip <- mask(rastIWD,geomClip)
   return (rastIWDClip)

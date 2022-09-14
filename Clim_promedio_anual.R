@@ -7,8 +7,11 @@ library(gstat)
 library(raster)
 source("functions.R")
 
-netcdfs <- list.files("datos","*.nc$")
+netcdfs <- list.files("datos",".*nc$")
 netcdfs <- as.list(netcdfs)
+indexStart<- match("CC_Temps_Vars_1961.nc",netcdfs)
+netcdfs <- netcdfs[indexStart:(length(netcdfs)-3)]
+#netcdfs <- list.files("datos","CC_Temps_Vars_[19 20]+[0-9][0-9].nc$")
 #netcdfName <-"CC_Temps_Vars_2000.nc" VALOR DE PRUEBA
 shpPath <-"shapefileMX/mx.shp"
 crsProj <-CRS("+proj=merc +a=6378137 +b=6378137
@@ -17,11 +20,11 @@ crsProj <-CRS("+proj=merc +a=6378137 +b=6378137
                             +nadgrids=@null
                             +wktext     +no_defs")
 resolution <- 200000
-listados <- tail(netcdfs,22)
+#listados <- tail(netcdfs,22)
 AnnualMeans <-list()
-for (netcdfName in listados){
+for (netcdfName in netcdfs){
   precip <- rasterStack(netcdfName,shpPath,crsProj,resolution)
   precipMean <- calc(precip,fun = mean)
-  print("-----FIN DEL PROMEDIO")
+  print(paste("-------FIN DE ANIO",netcdfName))
   AnnualMeans <-append(AnnualMeans,precipMean)
 }

@@ -10,7 +10,7 @@ library(raster)
 source("functions.R")
 
 #carga de datos y shp de mx ----
-data2000 <- nc_open("datos/CC_Temps_Vars_2000_1.nc")
+data2000 <- nc_open("datos/CC_Temps_Vars_2000.nc")
 geomMx   <- st_read("shapefileMX/mx.shp")
 geomMx   <- as_Spatial(geomMx) #conversion a objeto reconocido en R
 
@@ -36,7 +36,7 @@ geomMx <- spTransform(geomMx,
                             +wktext     +no_defs"))
 #creacion del SpatialGrid object ----
 #DEFINIR AQUI LA RESOLUCION DEL RESTER FINAL
-grd<- createSpatialGrid(200000,dfSpatial)
+grd<- createSpatialGrid(2000,dfSpatial)
 #Obtencion de todos las interpolaciones por tiempo
 IDWList <- list()
 # ptm<-proc.time() ESTADISTICAS DE TIEMPO
