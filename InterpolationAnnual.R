@@ -1,5 +1,4 @@
 #ESTE CODIGO ESTA DISENIADA PARA PRUEBAS UNITARIAS
-
 library(ncdf4)
 library(sf)
 library(tmap)                # Vizualizacion de datos
@@ -15,7 +14,7 @@ geomMx   <- st_read("shapefileMX/mx.shp")
 geomMx   <- as_Spatial(geomMx) #conversion a objeto reconocido en R
 
 # CON ESTA FUNCION SE ASEGURA QUE NO HAYA NA EN LOS CAMPOS ESPACIALES
-df <- coordsFilterNan(data2000,1)[c(1,2)]  
+df <- coordsFilterNan(data2000,1)[c(1,2)]
 
 #Generacion del SpatialPoint object  y definicion de extension----
 dfSpatial <-SpatialPoints(df,proj4string = CRS("+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs"))
@@ -52,5 +51,7 @@ for (ti in 1:length(ncvar_get(data2000,"Time"))){
 }
 IWDStack <- stack(IDWList,quick=TRUE)
 meanIDW <- calc(IWDStack,fun=mean)
-plot(meanIDW)
+#plot(meanIDW)
 
+
+writeRaster(meanIDW,"IDW_100_4","GTiff")
